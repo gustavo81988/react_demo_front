@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRef, useState, useEffect } from "react";
+import axios from '../api/axios';
 
 function Copyright(props) {
   return (
@@ -28,7 +30,30 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/register';
+
 export default function SignUp() {
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [user, setUser] = useState('');
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
+  const [pwd, setPwd] = useState('');
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState('');
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
