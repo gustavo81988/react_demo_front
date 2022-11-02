@@ -72,6 +72,8 @@ const App = () => {
                     fullWidth
                     label="Last Name"
                     autoFocus
+                    error={errors.lastName?.message}
+                    helperText={errors.lastName?.message}
                     {...field} />}
                   />
                 </Grid>
@@ -85,6 +87,8 @@ const App = () => {
                     fullWidth
                     label="Email Address"
                     autoFocus
+                    error={errors.email?.message}
+                    helperText={errors.email?.message}
                     {...field} />}
                   />
                 </Grid>
@@ -98,6 +102,8 @@ const App = () => {
                     fullWidth
                     label="Age"
                     autoFocus
+                    error={errors.age?.message}
+                    helperText={errors.age?.message}
                     {...field} />}
                   />
                 </Grid>
@@ -112,6 +118,8 @@ const App = () => {
                     type="password"
                     label="Password"
                     autoFocus
+                    error={errors.password?.message}
+                    helperText={errors.password?.message}
                     {...field} />}
                   />
                 </Grid>
@@ -126,6 +134,8 @@ const App = () => {
                     type="password"
                     label="Confirm Password"
                     autoFocus
+                    error={errors.confirmPassword?.message}
+                    helperText={errors.confirmPassword?.message}
                     {...field} />}
                   />
                 </Grid>
