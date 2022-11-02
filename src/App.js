@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { TextField, Button, Box, Grid, Container } from '@mui/material';
+import { 
+  TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
+  InputLabel,IconButton,FormControl
+} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useForm, Controller } from "react-hook-form";
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -31,6 +37,29 @@ const App = () => {
   });
 
   const onSubmit = data => console.log(data);
+
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -108,10 +137,12 @@ const App = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth>
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <Controller
                     name="password"
                     control={control}
-                    render={({ field }) => <TextField 
+                    render={({ field }) => <OutlinedInput 
                     margin="normal"
                     fullWidth
                     type="password"
@@ -119,8 +150,24 @@ const App = () => {
                     autoFocus
                     error={errors.password?.message}
                     helperText={errors.password?.message}
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     {...field} />}
                   />
+                  </FormControl>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
