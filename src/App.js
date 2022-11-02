@@ -5,19 +5,24 @@ import "./App.css"
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
+const schema = yup.object({
+  firstName: yup.string().required(),
+}).required();
 
 const theme = createTheme();
 
 const App = () => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, formState:{ errors } } = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
       email: '',
       password: '',
       passwordConfirmation: '',
-    }
+    },
+    resolver: yupResolver(schema)
   });
 
   const onSubmit = data => console.log(data);
@@ -48,6 +53,7 @@ const App = () => {
                     autoFocus
                     {...field} />}
                   />
+                  <p>{errors.firstName?.message}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
