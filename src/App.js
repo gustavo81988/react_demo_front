@@ -9,6 +9,11 @@ import * as yup from "yup";
 
 const schema = yup.object({
   firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  age: yup.number().positive().integer().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(4).max(15).required(),
+  confirmPassword: yup.string().oneOf([yup.ref("password"),null]).required(),
 }).required();
 
 const theme = createTheme();
@@ -19,8 +24,9 @@ const App = () => {
       firstName: '',
       lastName: '',
       email: '',
+      age: '',
       password: '',
-      passwordConfirmation: '',
+      confirmPassword: '',
     },
     resolver: yupResolver(schema)
   });
@@ -84,6 +90,19 @@ const App = () => {
 
                 <Grid item xs={12} sm={12}>
                   <Controller
+                    name="age"
+                    control={control}
+                    render={({ field }) => <TextField 
+                    margin="normal"
+                    fullWidth
+                    label="Age"
+                    autoFocus
+                    {...field} />}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Controller
                     name="password"
                     control={control}
                     render={({ field }) => <TextField 
@@ -98,13 +117,13 @@ const App = () => {
 
                 <Grid item xs={12} sm={12}>
                   <Controller
-                    name="passwordConfirmation"
+                    name="confirmPassword"
                     control={control}
                     render={({ field }) => <TextField 
                     margin="normal"
                     fullWidth
                     type="password"
-                    label="Password Confirmation"
+                    label="Confirm Password"
                     autoFocus
                     {...field} />}
                   />
