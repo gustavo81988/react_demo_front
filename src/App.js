@@ -57,9 +57,10 @@ const App = () => {
                     label="First Name"
                     name="las_name"
                     autoFocus
+                    error={errors.firstName?.message}
+                    helperText={errors.firstName?.message}
                     {...field} />}
                   />
-                  <p>{errors.firstName?.message}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
