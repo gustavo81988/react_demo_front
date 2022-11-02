@@ -10,7 +10,9 @@ const theme = createTheme();
 const App = () => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      firstName: ''
+      firstName: '',
+      lastName: '',
+      email: ''
     }
   });
 
