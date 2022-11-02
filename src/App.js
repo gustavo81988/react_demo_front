@@ -12,7 +12,9 @@ const App = () => {
     defaultValues: {
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
+      password: '',
+      password_confirmation: '',
     }
   });
 
@@ -30,7 +32,7 @@ const App = () => {
             alignItems: 'center',
             }}
         >
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                   <Controller
@@ -70,6 +72,38 @@ const App = () => {
                     id="email"
                     label="Email Address"
                     name="email"
+                    autoFocus
+                    {...field} />}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Controller
+                    name="password"
+                    control={control}
+                    render={({ field }) => <TextField 
+                    margin="normal"
+                    fullWidth
+                    id="password"
+                    type="password"
+                    label="Password"
+                    name="password"
+                    autoFocus
+                    {...field} />}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Controller
+                    name="password_confirmation"
+                    control={control}
+                    render={({ field }) => <TextField 
+                    margin="normal"
+                    fullWidth
+                    id="password_confirmation"
+                    type="password"
+                    label="Password Confirmation"
+                    name="password_confirmation"
                     autoFocus
                     {...field} />}
                   />
