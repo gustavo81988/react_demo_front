@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
-  InputLabel,IconButton,FormControl
+  InputLabel,IconButton,FormControl,FormHelperText
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -15,10 +15,9 @@ import * as yup from "yup";
 const schema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
-  age: yup.number().positive().integer().required(),
   email: yup.string().email().required(),
   password: yup.string().min(4).max(15).required(),
-  confirmPassword: yup.string().oneOf([yup.ref("password"),null]).required(),
+  confirmPassword: yup.string().min(4).max(15).oneOf([yup.ref("password"),null]).required(),
 }).required();
 
 const theme = createTheme();
@@ -29,7 +28,6 @@ const App = () => {
       firstName: '',
       lastName: '',
       email: '',
-      age: '',
       password: '',
       confirmPassword: '',
     },
@@ -122,21 +120,6 @@ const App = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                  <Controller
-                    name="age"
-                    control={control}
-                    render={({ field }) => <TextField 
-                    margin="normal"
-                    fullWidth
-                    label="Age"
-                    autoFocus
-                    error={errors.age?.message}
-                    helperText={errors.age?.message}
-                    {...field} />}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12}>
                   <FormControl fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <Controller
@@ -167,14 +150,17 @@ const App = () => {
                     }
                     {...field} />}
                   />
+                  <FormHelperText error >{errors.password?.message}</FormHelperText>
                   </FormControl>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                <FormControl fullWidth>
+                  <InputLabel>Confirm Password</InputLabel>
                   <Controller
                     name="confirmPassword"
                     control={control}
-                    render={({ field }) => <TextField 
+                    render={({ field }) => <OutlinedInput 
                     margin="normal"
                     fullWidth
                     type="password"
@@ -182,8 +168,25 @@ const App = () => {
                     autoFocus
                     error={errors.confirmPassword?.message}
                     helperText={errors.confirmPassword?.message}
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     {...field} />}
                   />
+                  <FormHelperText error>{errors.confirmPassword?.message}</FormHelperText>
+                  </FormControl>
                 </Grid>
             </Grid>
             <Button
