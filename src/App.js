@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { TextField, Button, Box, Grid, Container } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
-import "./App.css"
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
