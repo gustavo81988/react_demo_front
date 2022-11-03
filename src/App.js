@@ -20,8 +20,6 @@ const schema = yup.object({
   email: yup.string().email('Must be a valid email').required('Required field'),
   password: yup.string().min(4,'Must be at least 4 characters').max(15,'Must be at most 15 characters').required(),
   confirmPassword: yup.string()
-    .min(4,'Must be at least 4 characters')
-    .max(15,'Must be at most 15 characters')
     .oneOf( [yup.ref("password"),''],'Password does not match').required('Required field'),
 }).required();
 
@@ -130,65 +128,65 @@ const App = () => {
 
                 <Grid item xs={12} sm={12}>
                   <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                  <Controller
-                    name="password"
-                    control={control}
-                    render={({ field }) => <OutlinedInput 
-                    fullWidth
-                    type="password"
-                    label="Password"
-                    error={errors.password?.message ? true : false}
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    {...field} />}
-                  />
-                  <FormHelperText error >{errors.password?.message}</FormHelperText>
+                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <Controller
+                      name="password"
+                      control={control}
+                      render={({ field }) => <OutlinedInput 
+                      fullWidth
+                      type="password"
+                      label="Password"
+                      error={errors.password?.message ? true : false}
+                      type={values.showPassword ? 'text' : 'password'}
+                      value={values.password}
+                      onChange={handleChange('password')}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      {...field} />}
+                    />
+                    <FormHelperText error >{errors.password?.message}</FormHelperText>
                   </FormControl>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                <FormControl fullWidth>
-                  <InputLabel>Confirm Password</InputLabel>
-                  <Controller
-                    name="confirmPassword"
-                    control={control}
-                    render={({ field }) => <OutlinedInput 
-                    fullWidth
-                    type="password"
-                    label="Confirm Password"
-                    error={errors.confirmPassword?.message ? true : false}
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    {...field} />}
-                  />
-                  <FormHelperText error>{errors.confirmPassword?.message}</FormHelperText>
+                  <FormControl fullWidth>
+                    <InputLabel>Confirm Password</InputLabel>
+                    <Controller
+                      name="confirmPassword"
+                      control={control}
+                      render={({ field }) => <OutlinedInput 
+                      fullWidth
+                      type="password"
+                      label="Confirm Password"
+                      error={errors.confirmPassword?.message ? true : false}
+                      type={values.showPassword ? 'text' : 'password'}
+                      value={values.password}
+                      onChange={handleChange('password')}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      {...field} />}
+                    />
+                    <FormHelperText error>{errors.confirmPassword?.message}</FormHelperText>
                   </FormControl>
                 </Grid>
             </Grid>
