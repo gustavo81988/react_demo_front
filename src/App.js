@@ -94,7 +94,7 @@ const App = () => {
                     label="First Name"
                     name="las_name"
                     autoFocus
-                    error={errors.firstName?.message}
+                    error={errors.firstName?.message ? true : false}
                     helperText={errors.firstName?.message}
                     {...field} />}
                   />
@@ -108,7 +108,7 @@ const App = () => {
                     margin="normal"
                     fullWidth
                     label="Last Name"
-                    error={errors.lastName?.message}
+                    error={errors.lastName?.message ? true : false}
                     helperText={errors.lastName?.message}
                     {...field} />}
                   />
@@ -122,7 +122,7 @@ const App = () => {
                     margin="normal"
                     fullWidth
                     label="Email Address"
-                    error={errors.email?.message}
+                    error={errors.email?.message ? true : false}
                     helperText={errors.email?.message}
                     {...field} />}
                   />
@@ -138,7 +138,7 @@ const App = () => {
                     fullWidth
                     type="password"
                     label="Password"
-                    error={errors.password?.message}
+                    error={errors.password?.message ? true : false}
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
                     onChange={handleChange('password')}
@@ -170,7 +170,7 @@ const App = () => {
                     fullWidth
                     type="password"
                     label="Confirm Password"
-                    error={errors.confirmPassword?.message}
+                    error={errors.confirmPassword?.message ? true : false}
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
                     onChange={handleChange('password')}
