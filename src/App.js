@@ -11,13 +11,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-
 const schema = yup.object({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(4).max(15).required(),
-  confirmPassword: yup.string().min(4).max(15).oneOf([yup.ref("password"),null]).required(),
+  firstName: yup.string().required('Required field'),
+  lastName: yup.string().required('Required field'),
+  email: yup.string().email('Must be a valid email').required('Required field'),
+  password: yup.string().min(4,'Must be at least 4 characters').max(15,'Must be at most 15 characters').required(),
+  confirmPassword: yup.string()
+    .min(4,'Must be at least 4 characters')
+    .max(15,'Must be at most 15 characters')
+    .oneOf( [yup.ref("password"),''],'Password must match Password Confirmation').required('Required field'),
 }).required();
 
 const theme = createTheme();
@@ -37,10 +39,7 @@ const App = () => {
   const onSubmit = data => console.log(data);
 
   const [values, setValues] = React.useState({
-    amount: '',
     password: '',
-    weight: '',
-    weightRange: '',
     showPassword: false,
   });
 
