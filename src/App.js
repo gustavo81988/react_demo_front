@@ -39,7 +39,9 @@ const App = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const [values, setValues] = React.useState({
     password: '',
@@ -133,12 +135,10 @@ const App = () => {
                     name="password"
                     control={control}
                     render={({ field }) => <OutlinedInput 
-                    margin="normal"
                     fullWidth
                     type="password"
                     label="Password"
                     error={errors.password?.message}
-                    helperText={errors.password?.message}
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
                     onChange={handleChange('password')}
@@ -167,12 +167,10 @@ const App = () => {
                     name="confirmPassword"
                     control={control}
                     render={({ field }) => <OutlinedInput 
-                    margin="normal"
                     fullWidth
                     type="password"
                     label="Confirm Password"
                     error={errors.confirmPassword?.message}
-                    helperText={errors.confirmPassword?.message}
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
                     onChange={handleChange('password')}
