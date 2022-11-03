@@ -8,6 +8,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useForm, Controller } from "react-hook-form";
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
@@ -70,6 +73,13 @@ const App = () => {
             alignItems: 'center',
             }}
         >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+           Sign up
+          </Typography>
+
           <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -96,7 +106,6 @@ const App = () => {
                     margin="normal"
                     fullWidth
                     label="Last Name"
-                    autoFocus
                     error={errors.lastName?.message}
                     helperText={errors.lastName?.message}
                     {...field} />}
@@ -111,7 +120,6 @@ const App = () => {
                     margin="normal"
                     fullWidth
                     label="Email Address"
-                    autoFocus
                     error={errors.email?.message}
                     helperText={errors.email?.message}
                     {...field} />}
@@ -129,7 +137,6 @@ const App = () => {
                     fullWidth
                     type="password"
                     label="Password"
-                    autoFocus
                     error={errors.password?.message}
                     helperText={errors.password?.message}
                     type={values.showPassword ? 'text' : 'password'}
@@ -164,7 +171,6 @@ const App = () => {
                     fullWidth
                     type="password"
                     label="Confirm Password"
-                    autoFocus
                     error={errors.confirmPassword?.message}
                     helperText={errors.confirmPassword?.message}
                     type={values.showPassword ? 'text' : 'password'}
