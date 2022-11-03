@@ -19,7 +19,7 @@ const schema = yup.object({
   confirmPassword: yup.string()
     .min(4,'Must be at least 4 characters')
     .max(15,'Must be at most 15 characters')
-    .oneOf( [yup.ref("password"),''],'Password must match Password Confirmation').required('Required field'),
+    .oneOf( [yup.ref("password"),''],'Password does not match').required('Required field'),
 }).required();
 
 const theme = createTheme();
