@@ -44,7 +44,8 @@ const App = () => {
       body:JSON.stringify({
         email: 'gustavo8198@gmail.com',
         password: 'Password!!22',
-        name: 'Gustavo Ramirez',
+        first_name: 'Gustavo',
+        last_name: 'Ramirez',
         returnSecureToken: true,
       }),
       headers:{
@@ -52,8 +53,14 @@ const App = () => {
         'Content-type': 'application/json'
       }
     });
+
     const resp = await response.json();
-    console.log(resp);
+    
+    if (response.ok) {
+      console.log(resp);
+    }else{
+      console.log('errors!',resp);
+    }
   };
 
   const [values, setValues] = React.useState({
