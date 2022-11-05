@@ -42,10 +42,10 @@ const App = () => {
     const response = await fetch('http://127.0.0.1:8000/api/auth/signup',{
       method: 'POST',
       body:JSON.stringify({
-        email: 'gustavo8198@gmail.com',
-        password: 'Password!!22',
-        first_name: 'Gustavo',
-        last_name: 'Ramirez',
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
         returnSecureToken: true,
       }),
       headers:{
