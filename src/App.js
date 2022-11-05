@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
-  InputLabel,IconButton,FormControl,FormHelperText
+  InputLabel,IconButton,FormControl,FormHelperText,LinearProgress
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -93,6 +93,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      {isLoading && <LinearProgress />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
