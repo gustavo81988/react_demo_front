@@ -29,7 +29,7 @@ const theme = createTheme();
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { control, handleSubmit, formState:{ errors } } = useForm({
+  const { control, handleSubmit,setError, formState:{ errors } } = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -63,7 +63,7 @@ const App = () => {
       if (response.ok) {
         console.log(resp);
       }else{
-        console.log('errors!',resp);
+        setError('email', { type: 'custom', message: 'Email already taken' });
       }
     }catch(err){
       console.log('Something went wrong.');
