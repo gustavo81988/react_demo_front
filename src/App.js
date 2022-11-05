@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
   InputLabel,IconButton,FormControl,FormHelperText
@@ -13,7 +14,6 @@ import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import axios from 'axios';
 
 const schema = yup.object({
   firstName: yup.string().required('Required field'),
@@ -27,6 +27,8 @@ const schema = yup.object({
 const theme = createTheme();
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { control, handleSubmit, formState:{ errors } } = useForm({
     defaultValues: {
       firstName: '',
@@ -39,28 +41,34 @@ const App = () => {
   });
 
   const onSubmit = async (data) => {
-    const response = await fetch('http://127.0.0.1:8000/api/auth/signup',{
-      method: 'POST',
-      body:JSON.stringify({
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        password: data.password,
-        returnSecureToken: true,
-      }),
-      headers:{
-        'Accept': 'application/json',
-        'Content-type': 'application/json'
-      }
-    });
+    setIsLoading(true);
+    try{
+      const response = await fetch('http://127.0.0.1:8000/api/auth/signup',{
+        method: 'POST',
+        body:JSON.stringify({
+          first_name: data.firstName,
+          last_name: data.lastName,
+          email: data.email,
+          password: data.password,
+          returnSecureToken: true,
+        }),
+        headers:{
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+        }
+      });
 
-    const resp = await response.json();
-    
-    if (response.ok) {
-      console.log(resp);
-    }else{
-      console.log('errors!',resp);
+      const resp = await response.json();
+      
+      if (response.ok) {
+        console.log(resp);
+      }else{
+        console.log('errors!',resp);
+      }
+    }catch(err){
+      console.log('Something went wrong.');
     }
+    setIsLoading(false);
   };
 
   const [values, setValues] = React.useState({
