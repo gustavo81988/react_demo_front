@@ -38,33 +38,22 @@ const App = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async(data) => {
-    fetch('http://127.0.0.1:8000/api/auth/signup', {
+  const onSubmit = async (data) => {
+    const response = await fetch('http://127.0.0.1:8000/api/auth/signup',{
       method: 'POST',
-      body: JSON.stringify({
+      body:JSON.stringify({
         email: 'gustavo8198@gmail.com',
         password: 'Password!!22',
         name: 'Gustavo Ramirez',
         returnSecureToken: true,
       }),
-      headers: {
+      headers:{
         'Accept': 'application/json',
         'Content-type': 'application/json'
-      },
-    }).then(async (res) => {
-      if (res.ok) {
-        console.log(res,'ok');
-      } else {
-        const data = await res.json();
-        let errorMessage = data;
-        throw new Error(errorMessage);
       }
-    }).then((data) => {
-      console.log(data,'ok');
-    })
-    .catch((err) => {
-      alert(err.message);
     });
+    const resp = await response.json();
+    console.log(resp);
   };
 
   const [values, setValues] = React.useState({
