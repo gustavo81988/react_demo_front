@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
-  InputLabel,IconButton,FormControl,FormHelperText,LinearProgress
+  InputLabel,IconButton,FormControl,FormHelperText,LinearProgress,Alert,
+  Collapse
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -28,7 +29,8 @@ const theme = createTheme();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [warningAlert, setWarningAlert] = useState(false);
+  
   const { control, handleSubmit,setError, formState:{ errors } } = useForm({
     defaultValues: {
       firstName: '',
@@ -63,10 +65,11 @@ const App = () => {
       if (response.ok) {
         console.log(resp);
       }else{
+        setWarningAlert(true)
         setError('email', { type: 'custom', message: 'Email already taken' });
       }
     }catch(err){
-      console.log('Something went wrong.');
+      setWarningAlert(true)
     }
     setIsLoading(false);
   };
@@ -91,9 +94,23 @@ const App = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+        setWarningAlert(false);
+    }, 4000);
+  },[warningAlert]);  
+
   return (
     <ThemeProvider theme={theme}>
       {isLoading && <LinearProgress />}
+      <Collapse in={warningAlert}>
+        <Alert
+          sx={{ mb: 2 }}
+        >
+          Close me!
+        </Alert>
+      </Collapse>
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
