@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
   InputLabel,IconButton,FormControl,FormHelperText,LinearProgress,Alert,
-  Collapse
+  Collapse,Link
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -246,6 +246,13 @@ const SignUp = () => {
             >
                 Sign Up
             </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Container>
