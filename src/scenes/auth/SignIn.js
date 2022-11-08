@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { 
   TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
   InputLabel,IconButton,FormControl,FormHelperText,
-  Link,FormControlLabel,Checkbox,Typography
+  Link,FormControlLabel,Checkbox,Typography,LinearProgress
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -98,6 +98,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
+      {isLoading && <LinearProgress />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

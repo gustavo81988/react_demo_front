@@ -10,7 +10,7 @@ import SignIn from './scenes/auth/SignIn';
 const App = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  let isLoggedIn = false;
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
 
   return (
     <>
