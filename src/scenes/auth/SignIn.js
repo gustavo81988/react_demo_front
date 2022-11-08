@@ -87,6 +87,7 @@ export default function SignIn() {
       if (response.ok) {
         console.log(resp);
       }else{
+        setError('password', { type: 'custom', message: 'Invalid Email/Password combination.' });
         console.log(resp);
       }
     }catch(err){
