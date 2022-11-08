@@ -1,17 +1,25 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { 
+  TextField, Button, Box, Grid, Container,OutlinedInput,InputAdornment,
+  InputLabel,IconButton,FormControl,FormHelperText,
+  Link,FormControlLabel,Checkbox,Typography
+} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { useForm, Controller } from "react-hook-form";
+import {useState,useEffect} from 'react';
+
+const schema = yup.object({
+  email: yup.string().email('Must be a valid email').required('Required field'),
+  password: yup.string().required('Required field'),
+}).required();
+
 
 function Copyright(props) {
   return (
@@ -29,13 +37,62 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const [isLoading, setIsLoading] = useState(false);
+  const [values, setValues] = React.useState({
+    password: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
     });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const { control, handleSubmit,setError, formState:{ errors } } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+    resolver: yupResolver(schema)
+  });
+
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    try{
+      const response = await fetch('http://127.0.0.1:8000/api/auth/login',{
+        method: 'POST',
+        body:JSON.stringify({
+          email: data.email,
+          password: data.password,
+          returnSecureToken: true,
+        }),
+        headers:{
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+        }
+      });
+
+      const resp = await response.json();
+      
+      if (response.ok) {
+        console.log(resp);
+      }else{
+        console.log(resp);
+      }
+    }catch(err){
+      console.log(err);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -56,27 +113,49 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
+              control={control}
+              render={({ field }) => <TextField 
               margin="normal"
-              required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              label="Email Address"
+              error={errors.email?.message ? true : false}
+              helperText={errors.email?.message}
+              {...field} />}
             />
+
+            <FormControl fullWidth>
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => <OutlinedInput 
+                fullWidth
+                type="password"
+                label="Password"
+                error={errors.password?.message ? true : false}
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                {...field} />}
+              />
+              <FormHelperText error >{errors.password?.message}</FormHelperText>
+            </FormControl>
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

@@ -20,7 +20,7 @@ const schema = yup.object({
   firstName: yup.string().required('Required field'),
   lastName: yup.string().required('Required field'),
   email: yup.string().email('Must be a valid email').required('Required field'),
-  password: yup.string().min(4,'Must be at least 4 characters').max(15,'Must be at most 15 characters').required(),
+  password: yup.string().min(4,'Must be at least 4 characters').max(15,'Must be at most 15 characters').required('Required field'),
   confirmPassword: yup.string()
     .oneOf( [yup.ref("password"),''],'Password does not match').required('Required field'),
 }).required();
