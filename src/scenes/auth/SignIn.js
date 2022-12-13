@@ -13,7 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import {useState,useEffect} from 'react';
+import {useState,useContext} from 'react';
+import AuthContext from "../../context/AuthProvider";
 
 const schema = yup.object({
   email: yup.string().email('Must be a valid email').required('Required field'),
@@ -38,6 +39,7 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
+  const { setAuth } = useContext(AuthContext);
   const [values, setValues] = React.useState({
     password: '',
     showPassword: false,
@@ -86,6 +88,10 @@ export default function SignIn() {
       
       if (response.ok) {
         console.log(resp);
+        const accessToken = resp?.accessToken;
+        const roles = {};
+        setAuth({roles, accessToken });
+        console.log();
       }else{
         setError('password', { type: 'custom', message: 'Invalid Email/Password combination.' });
         console.log(resp);
